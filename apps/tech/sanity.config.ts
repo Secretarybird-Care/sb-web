@@ -9,6 +9,8 @@
  * - Project ID and dataset name are loaded from environment variables.
  * - Never hardcode projectId or dataset in this file.
  * - See .env.example for required variables.
+ *
+ * CI: Schema deploy runs automatically on push via .github/workflows/sanity-schema-deploy.yml
  */
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
