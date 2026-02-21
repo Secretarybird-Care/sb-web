@@ -1,0 +1,35 @@
+name: Lokalise i18n Sync (STUB — disabled)
+
+# DISABLED: Language scope not yet decided by Maestro.
+# Enable by removing the 'if: false' condition once:
+#   1. Maestro approves target language list
+#   2. LOKALISE_API_TOKEN added to GitHub Secrets
+#   3. packages/i18n SDK integration is built
+
+on:
+  workflow_dispatch:  # manual trigger only until enabled
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - 'packages/i18n/**'
+
+jobs:
+  i18n-sync:
+    name: Lokalise Sync
+    if: false  # DISABLED — awaiting Maestro language scope decision
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: Pull translations from Lokalise
+        run: echo "TODO — implement lokalise pull once scope approved"
+        env:
+          LOKALISE_API_TOKEN: ${{ secrets.LOKALISE_API_TOKEN }}
+          LOKALISE_PROJECT_ID: ${{ secrets.LOKALISE_PROJECT_ID }}
