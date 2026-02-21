@@ -1,0 +1,38 @@
+name: Sanity Schema Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/tech/sanity/**'
+      - 'apps/tech/sanity.config.ts'
+      - 'apps/tech/package.json'
+
+jobs:
+  deploy-schema:
+    name: Deploy Sanity Schema & Manifest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/tech
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/tech/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy schema & manifest to Sanity
+        run: npx sanity schema deploy
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
